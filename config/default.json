@@ -1,0 +1,9 @@
+{
+    "sqlConnect" : {
+        "host": "localhost",
+        "user": "root",
+        "password": "",
+        "database": "turingshop"
+    }
+
+}

@@ -1,0 +1,30 @@
+{
+  "name": "turing-fullstack",
+  "version": "1.0.0",
+  "description": "fullstack solution for online shop owners, Very fast and secure and  built using cutting edge web technologies (node.js-express, mysql-database, and a react frontend client).",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IsaacDarko/turing-fullstack.git"
+  },
+  "keywords": [
+    "fullstack",
+    "Node-React",
+    "CRUD"
+  ],
+  "author": "Isaac Tsibu-Darko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IsaacDarko/turing-fullstack/issues"
+  },
+  "homepage": "https://github.com/IsaacDarko/turing-fullstack#readme",
+  "dependencies": {
+    "concurrently": "^4.1.1",
+    "config": "^3.2.2",
+    "express": "^4.17.1",
+    "mysql": "^2.17.1"
+  }
+}
