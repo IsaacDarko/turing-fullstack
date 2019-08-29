@@ -1,0 +1,23 @@
+STEP BY STEP INSTRUCTIONS FOR FRONT END
+
+
+set up react app
+
+install all dependencies {
+
+}
+
+list out all features the app would need and develop them into react components
+
+inside the src-root (index.js) use <Router /> from react-router-dom to wrap around the  <App /> component
+
+inside the src-root (App.js) import the Switch and Route modules from react-router-dom and use them to wrap around all the imported components wrapping the component inside <Route /> tags which are then wrapped inside a larger <Switch /> tags
+
+Create a store.js inside the src 
+
+wrap all everything that is rendered inside the App.js inside <Provider /> tags imported from react-redux so they can all access state if they need to.
+
+create the reducer directory inside the src as well as the actions directory
+
+create a corresponding reducer for all the components previously created (the ones which will need to interact with the application level state provided by the store)
+

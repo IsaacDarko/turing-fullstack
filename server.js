@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const  exhandle = require('express-handlebars');//testing backend api performance with a view engine for dev purposes
+const bodyParser = require('body-parser')
 //end of declarations of dependencies
 
 //initializing app
@@ -47,6 +48,10 @@ app.get('/', (req, res) => res.send('INDEX'));
 //setting up middleware
 app.engine('handlebars', exhandle({defaulLayout: 'main'}));
 app.set('view engine', 'handlebars');
+
+//body parser
+app.use(bodyParser.urlencoded({ extended:false }));
+
 
 app.use('/product', product);
 app.use('/customer', customer);

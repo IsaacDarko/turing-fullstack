@@ -7,9 +7,11 @@ const Product = require('../../models/Product');
 //Get product list from database
 router.get('/', (req, res) => 
     Product.findAll()
-    .then(product => {
-        console.log(product);
-        res.sendStatus(200);
+    .then(products => {
+        res.json({
+            data:products
+        });
+        
     })
     .catch(err => console.log(err))
 
