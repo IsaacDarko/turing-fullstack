@@ -13,6 +13,7 @@ import Catalogue from './Components/pages/Catalogue';
 import ShippingRegions from './Components/pages/ShippingRegions';
 import PrivacyPolicy from './Components/pages/PrivacyPolicy';
 import SpecialOffers from './Components/pages/SpecialOffers';
+import Login from './Components/Login';
  
 
 class App extends Component {
@@ -32,6 +33,7 @@ class App extends Component {
                 <Route path="/shipping-regions" component={ShippingRegions} />
                 <Route path="/special-offers" component={SpecialOffers} />
                 <Route path="/privacy-policy" component={PrivacyPolicy} />
+                <Route path="/login" component={Login} />
                 <Route component={Default} />
               </Switch>
               <Modal />

@@ -10,7 +10,7 @@ class Modal extends Component {
             <ProductConsumer>
                 { (value) => {
                     const { modalOpen, closeModal } = value;
-                    const { img, price, title  } = value.modalProduct;
+                    const { image, discounted_price, name  } = value.modalProduct;
 
                     if(!modalOpen){
                         return null;
@@ -23,10 +23,10 @@ class Modal extends Component {
                                         <div id="modal" className="col-10 mx-auto col-md-7 col-lg-5 text-center text-capitalize p-5">
                                             <h4>Item Added To Cart</h4>
                                             <div className="container">
-                                            <img src={img} className="image-fluid" />
+                                            <img src={image} className="image-fluid" alt="product" />
                                             </div>
-                                            <h4> {title} </h4>
-                                            <h5 className="text-muted"> ${price} </h5>   
+                                            <h4> {name} </h4>
+                                            <h5 className="text-muted"> ${discounted_price} </h5>   
                                             <Link to="/">
                                                 <ButtonContainer onClick={ () => closeModal()}>
                                                     Continue

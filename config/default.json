@@ -1,9 +1,15 @@
 {
-    "sqlConnect" : {
+    "sqlConnect" : {             
         "host": "localhost",
-        "user": "root",
-        "password": "",
-        "database": "turingshop"
-    }
+        "dialect":"mysql",
+        "pool": {
+            "max": 50000,
+            "min": 0,
+            "acquire": 3000000,
+            "idle": 1000000
+        }  
+    },
 
-}
+    "jwtSecret":"ts_myJWTSecret"
+
+} 

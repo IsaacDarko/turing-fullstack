@@ -6,14 +6,12 @@ import styled from 'styled-components';
 import { 
     Badge
 } from 'reactstrap';
-
+ 
 class Product extends Component {
-    
-
-
+ 
     render() {
 
-       const { id, title, img, price, inCart } = this.props.product;
+       const { product_id, name, image, price, discounted_price, inCart  } = this.props.product;
 
         return (
                 <ProductConsumer>
@@ -22,17 +20,17 @@ class Product extends Component {
                 
                 <div className="card">
 
-                    <div className="img-container p-5" onClick={ () =>value.handleDetail(id)}>
+                    <div className="img-container p-5" onClick={ () =>value.handleDetail(product_id)}>
                             <Link to="/details">
-                                <img src={img} alt="product" className="card-img-top" />
+                                <img src={image} alt="product" className="card-img-top" />
                             </Link>
 
 
                             <button className="cart-btn" 
                                 disabled={ inCart ? true : false} 
                                 onClick={() => {
-                                        value.addToCart(id);
-                                        value.openModal(id);
+                                        value.addToCart(product_id);
+                                        value.openModal(product_id);
                                      }}
                                 >
                                 { inCart? (
@@ -54,10 +52,10 @@ class Product extends Component {
                     {/* Cart Footer */}
                     <div className="card-footer d-flex justify-content-between">
                         <p className="align-self-center mb-0">
-                            {title}
+                            {name}
                         </p>
                         <h5 className="font-italic mb0">
-                            <span className="mr-1">$ {price}</span> 
+                            <span className="mr-1"> <del>$ {price}</del> ${discounted_price}</span> 
                         </h5>
                     </div>
 
@@ -74,7 +72,7 @@ class Product extends Component {
 
 Product.propTypes = {
     product: PropTypes.shape({
-        id: PropTypes.number ,
+        product_id: PropTypes.number ,
         img: PropTypes.string ,
         title: PropTypes.string ,
         price: PropTypes.number,

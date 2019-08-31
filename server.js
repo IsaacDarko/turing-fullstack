@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const  exhandle = require('express-handlebars');//testing backend api performance with a view engine for dev purposes
 const bodyParser = require('body-parser')
 //end of declarations of dependencies
@@ -24,10 +25,8 @@ const shipping_region = require('./routes/apis/shipping_region');
 const shopping_cart = require('./routes/apis/shopping_cart');
 const tax = require('./routes/apis/tax');
 const review = require('./routes/apis/review');
-
-
-
-
+const user = require('./routes/apis/user');
+const auth = require('./routes/apis/auth');
 
 
 //Setting up DB connection
@@ -50,10 +49,15 @@ app.engine('handlebars', exhandle({defaulLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 //body parser
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended:false }));
 
 
-app.use('/product', product);
+//serving up static files(assets/images)
+app.use(express.static('assets/product-images'));
+
+//setting up routes(apis)
+app.use('/products', product);
 app.use('/customer', customer);
 app.use('/department', department);
 app.use('/shipping', shipping);
@@ -69,8 +73,10 @@ app.use('/shipping_regions', shipping_region);
 app.use('/shopping_cart', shopping_cart);
 app.use('/tax', tax);
 app.use('/reviews', review);
+app.use('/user', user);
+app.use('/auth', auth);
 
 
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 app.listen(port, ()=>console.log(`Server is now listening in on ${port}`));

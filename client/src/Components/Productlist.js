@@ -6,9 +6,9 @@ import {
     Container,
     ListGroup
 } from 'reactstrap';
-
+ 
 class Productlist extends Component {
-    
+     
 
     render() {
         return (
@@ -27,7 +27,7 @@ class Productlist extends Component {
                                         <ProductConsumer>
                                             { value =>{    
                                                 return value.products.map(product =>{
-                                                    return <Product key={product.id} product={product} /> 
+                                                    return <Product key={product.product_id} product={product} /> 
                                                 });                                  
                                                     
                                             }} 

@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { storeProducts, detailProduct } from './data';
+//import { productsData } from './controllers/data';
+import axios from 'axios';
 
 
 const ProductContext = React.createContext();
 //Provider
 //Consumer
 
-
+ 
 
 class ProductProvider extends Component {
 
@@ -16,6 +17,17 @@ class ProductProvider extends Component {
         cart: [],
         modalOpen:false,
         modalProduct: [],
+        singleProduct:{
+            id: null,
+            name:null,
+            price:null,
+            discounted_price:null,
+            image:null,
+            image_2:null,
+            thumbnail:null,
+            display:null,
+            inCart:false
+        },       
         cartSubTotal: 0,
         cartTax: 0,
         cartTotal: 0
@@ -23,34 +35,39 @@ class ProductProvider extends Component {
 
     componentDidMount(){
         this.setProducts();
-    };
+    }   
+      
 
     setProducts = () =>{
-        let tempProducts = [];
-        storeProducts.forEach( item =>{
-            const singleItem = {...item}; 
-            tempProducts = [...tempProducts, singleItem];
+    axios.get('/products')
+    .then((res)=>{ 
+        let temps = res.data;
+        let singleItem=[];
+        temps.forEach( item =>{
+            singleItem = {...item, cart:false};
+            temps = [...temps, singleItem];
         })
         this.setState( () => {
-            return { products: tempProducts };
-        });
-    };
+            return { products: temps };
+            });
+    }) 
+     };
 
-    getProduct = (id) => {
-        const product = this.state.products.find( product => product.id === id );
+    getProduct = (product_id) => {
+        const product = this.state.products.find( product => product.product_id === product_id );
         return product;
     }
     
-    handleDetail = (id) =>{
-        const product = this.getProduct(id);
+    handleDetail = (product_id) =>{
+        const product = this.getProduct(product_id);
         this.setState(()=> {
             return { detailProduct: product };
         });  
     };
     
-    addToCart = (id) =>{
+    addToCart = (product_id) =>{
         let tempProducts = [...this.state.products];
-        const index = tempProducts.indexOf(this.getProduct(id));
+        const index = tempProducts.indexOf(this.getProduct(product_id));
         const product = tempProducts[index];
         product.inCart = true;
         product.count = 1;
@@ -76,9 +93,9 @@ class ProductProvider extends Component {
         })
     };
 
-    increment = (id) =>{
+    increment = (product_id) =>{
         let tempCart = [...this.state.cart];
-        const selectedProduct = tempCart.find( item => item.id == id );
+        const selectedProduct = tempCart.find( item => item.product_id === product_id );
 
         const index = tempCart.indexOf(selectedProduct);
         const product = tempCart[index];
@@ -94,9 +111,9 @@ class ProductProvider extends Component {
         })
     }
 
-    decrement = (id) =>{
+    decrement = (product_id) =>{
         let tempCart =[...this.state.cart];
-        const selectedProduct = tempCart.find( item => item.id === id);
+        const selectedProduct = tempCart.find( item => item.product_id === product_id);
 
         const index = tempCart.indexOf(selectedProduct);
         const product = tempCart[index];
@@ -104,7 +121,7 @@ class ProductProvider extends Component {
         product.count = product.count - 1;
 
         if(product.count === 0){
-            this.removeItem(id)
+            this.removeItem(product_id)
         }        
         else{
             product.total = product.count * product.price;
@@ -117,14 +134,14 @@ class ProductProvider extends Component {
         }
     }
 
-    removeItem = (id) =>{
+    removeItem = (product_id) =>{
         //set up all the necessary temporary variable needed.
         let tempProducts = [...this.state.products];
         let tempCart = [...this.state.cart];
         //filter out item from the temporary cart using it's id
-        tempCart = tempCart.filter(item => item.id !== id);
+        tempCart = tempCart.filter(item => item.id !== product_id);
         //retrieve the index of the removed item
-        const index = tempProducts.indexOf(this.getProduct(id));
+        const index = tempProducts.indexOf(this.getProduct(product_id));
         let removedProduct = tempProducts[index];
         //use the index of the removed product to reset it's incart,count and total attributes
         removedProduct.inCart = false;

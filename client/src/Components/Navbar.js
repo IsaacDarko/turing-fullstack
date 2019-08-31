@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import logo from '../logo.png';
 import {
     Collapse,
@@ -8,7 +8,6 @@ import {
     NavbarBrand,
     Nav,
     NavItem,
-    NavLink,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
@@ -17,20 +16,80 @@ import styled from 'styled-components';
 import {ButtonContainer} from './styles/Button';
 
 export default class Navigation extends Component {
-    constructor(props) {
-        super(props);
+      constructor() {
+        super();
     
         this.toggle = this.toggle.bind(this);
+        this.logout = this.logout.bind(this);
+
         this.state = {
           isOpen: false
         };
       }
+
+
       toggle() {
         this.setState({
           isOpen: !this.state.isOpen
         });
       }
+
+      logout(e) {
+        //e.preventDefault()
+        localStorage.removeItem('xauthtoken');
+        this.props.history.push('/')
+      }
+        
+
       render() {
+
+        const loginRegLinks = (
+                  <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                      Sign In
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                      <DropdownItem>
+                        <Link to="/login">
+                        Login
+                        </Link>
+                      </DropdownItem>
+                      <DropdownItem>
+                        <Link to="/register">
+                        Register
+                        </Link>
+                      </DropdownItem>
+                      <DropdownItem divider />
+                      <DropdownItem>
+                        <Link to="/admin">
+                        Admin
+                        </Link>
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </UncontrolledDropdown>
+        )
+
+
+        const userLinks =(
+                  <UncontrolledDropdown nav inNavbar>
+                      <DropdownToggle nav caret>
+                        My Account
+                      </DropdownToggle>
+                      <DropdownMenu right>
+                        <Link to="/orders">
+                          <DropdownItem>
+                            Orders
+                          </DropdownItem>
+                        </Link>
+                        <a href="" onClick={ this.logout.bind(this) }>
+                          <DropdownItem>
+                            Logout                          
+                          </DropdownItem>
+                          </a>                 
+                      </DropdownMenu>
+                    </UncontrolledDropdown>
+        )
+
         return (
             <Navbar color="dark" className="navbar navbar-expand-sm navbar-dark">
               <NavbarBrand href="/">
@@ -77,24 +136,8 @@ export default class Navigation extends Component {
                         </ButtonContainer>
                     </Link>    
 
-                  
-                  <UncontrolledDropdown nav inNavbar>
-                    <DropdownToggle nav caret>
-                      Sign In
-                    </DropdownToggle>
-                    <DropdownMenu right>
-                      <DropdownItem>
-                        Login
-                      </DropdownItem>
-                      <DropdownItem>
-                        Register
-                      </DropdownItem>
-                      <DropdownItem divider />
-                      <DropdownItem>
-                        Admin
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </UncontrolledDropdown>
+                {localStorage.xauthtoken ? userLinks : loginRegLinks}  
+
                 </Nav>
               </Collapse>
             </Navbar>
